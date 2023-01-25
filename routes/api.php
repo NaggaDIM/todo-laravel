@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::apiResource('tasks', TasksController::class);
+Route::match(['put', 'patch'], '/tasks/{task}/done', [TasksController::class, 'done'])->name('tasks.done');

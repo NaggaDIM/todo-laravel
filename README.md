@@ -1,66 +1,118 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# TODO Laravel API APP
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 1. Разворачивание проекта
+### Клонирование проекта
+> git clone git@github.com:NaggaDIM/todo-laravel.git && cd todo-laravel
 
-## About Laravel
+### Установка зависимостей
+    docker run --rm \
+        -u "$(id -u):$(id -g)" \
+        -v "$(pwd):/var/www/html" \
+        -w /var/www/html \
+        laravelsail/php82-composer:latest \
+        composer install --ignore-platform-reqs
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Копирование конфигурационного файла
+> cp .env.example .env
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Запуск сервиса
+> ./vendor/bin/sail up -d
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Генерация ключа Laravel
+> ./vendor/bin/sail artisan key:generate
 
-## Learning Laravel
+### Применение миграций
+> ./vendor/bin/sail artisan migrate
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Кэширование конфигурации и списка маршрутов
+> ./vendor/bin/sail artisan optimize
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Добавление 20-ти тестовых задач (опционально)
+> ./vendor/bin/sail artisan db:seed --seeder=TaskSeeder
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Сайт будет доступен по адресу [http://127.0.0.1:8090](http://127.0.0.1:8090)
 
-## Laravel Sponsors
+## 2. Доступные маршруты
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Список задач
+    GET|HEAD /api/tasks
+    
+    Параметры:
+    * all - Логический (Необязательно) - При передачи истины отобразятся все задачи, иначе только невыполненые
 
-### Premium Partners
+    Ответ: Список задач
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+    Пример ответа:
+    [
+        {
+            "id": 1,
+            "status": "NEW",
+            "description": "Fugiat architecto numquam ab odio velit et. Repudiandae enim iusto quo eius perspiciatis assumenda. Quisquam et nihil vel repellat dolorem voluptatem autem. Ipsa earum eum ex pariatur nam eaque sunt. Rerum est placeat quasi enim. Reiciendis aut nesciunt porro ducimus distinctio. Accusamus numquam minus vitae nemo doloribus minima. Eligendi iusto cupiditate eos aut. Doloribus cupiditate nulla non. Omnis aperiam in cumque et consectetur enim. Facere veritatis et recusandae atque. Est quae corporis excepturi eos laboriosam qui cupiditate et. Voluptas est et dolor et saepe. Et accusamus velit voluptas fugiat doloremque vero. Itaque qui doloremque sit quia. Aut fuga excepturi ducimus est magnam rem itaque. Dicta voluptatibus nobis omnis sit. Qui deleniti velit eum optio nulla doloremque suscipit. Quia occaecati ipsam nulla id."
+        }
+    ]
 
-## Contributing
+### Просмотр задачи
+    GET|HEAD /api/tasks/{id}
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    Ответ: Задача
 
-## Code of Conduct
+    Пример ответа:
+    {
+        "id": 1,
+        "status": "NEW",
+        "description": "Fugiat architecto numquam ab odio velit et. Repudiandae enim iusto quo eius perspiciatis assumenda. Quisquam et nihil vel repellat dolorem voluptatem autem. Ipsa earum eum ex pariatur nam eaque sunt. Rerum est placeat quasi enim. Reiciendis aut nesciunt porro ducimus distinctio. Accusamus numquam minus vitae nemo doloribus minima. Eligendi iusto cupiditate eos aut. Doloribus cupiditate nulla non. Omnis aperiam in cumque et consectetur enim. Facere veritatis et recusandae atque. Est quae corporis excepturi eos laboriosam qui cupiditate et. Voluptas est et dolor et saepe. Et accusamus velit voluptas fugiat doloremque vero. Itaque qui doloremque sit quia. Aut fuga excepturi ducimus est magnam rem itaque. Dicta voluptatibus nobis omnis sit. Qui deleniti velit eum optio nulla doloremque suscipit. Quia occaecati ipsam nulla id."
+    }
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Создание задачи
+    POST /api/tasks
 
-## Security Vulnerabilities
+    Параметры:
+    * description - обязательный, строковы, максимум 1000 символов
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    Ответ: Задача
 
-## License
+    Пример ответа:
+    {
+        "id": 1,
+        "status": "NEW",
+        "description": "Fugiat architecto numquam ab odio velit et. Repudiandae enim iusto quo eius perspiciatis assumenda. Quisquam et nihil vel repellat dolorem voluptatem autem. Ipsa earum eum ex pariatur nam eaque sunt. Rerum est placeat quasi enim. Reiciendis aut nesciunt porro ducimus distinctio. Accusamus numquam minus vitae nemo doloribus minima. Eligendi iusto cupiditate eos aut. Doloribus cupiditate nulla non. Omnis aperiam in cumque et consectetur enim. Facere veritatis et recusandae atque. Est quae corporis excepturi eos laboriosam qui cupiditate et. Voluptas est et dolor et saepe. Et accusamus velit voluptas fugiat doloremque vero. Itaque qui doloremque sit quia. Aut fuga excepturi ducimus est magnam rem itaque. Dicta voluptatibus nobis omnis sit. Qui deleniti velit eum optio nulla doloremque suscipit. Quia occaecati ipsam nulla id."
+    }
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Редактирование задачи
+    PUT|PATCH /api/tasks/{id}
+
+    Параметры:
+    * description - обязательный, строковы, максимум 1000 символов
+
+    Ответ: Задача
+
+    Пример ответа:
+    {
+        "id": 1,
+        "status": "NEW",
+        "description": "Fugiat architecto numquam ab odio velit et. Repudiandae enim iusto quo eius perspiciatis assumenda. Quisquam et nihil vel repellat dolorem voluptatem autem. Ipsa earum eum ex pariatur nam eaque sunt. Rerum est placeat quasi enim. Reiciendis aut nesciunt porro ducimus distinctio. Accusamus numquam minus vitae nemo doloribus minima. Eligendi iusto cupiditate eos aut. Doloribus cupiditate nulla non. Omnis aperiam in cumque et consectetur enim. Facere veritatis et recusandae atque. Est quae corporis excepturi eos laboriosam qui cupiditate et. Voluptas est et dolor et saepe. Et accusamus velit voluptas fugiat doloremque vero. Itaque qui doloremque sit quia. Aut fuga excepturi ducimus est magnam rem itaque. Dicta voluptatibus nobis omnis sit. Qui deleniti velit eum optio nulla doloremque suscipit. Quia occaecati ipsam nulla id."
+    }
+
+### Пометить задачу выполненной
+    PUT|PATCH /api/tasks/{id}/done
+
+    Ответ: Задача
+
+    Пример ответа:
+    {
+        "id": 1,
+        "status": "DONE",
+        "description": "Fugiat architecto numquam ab odio velit et. Repudiandae enim iusto quo eius perspiciatis assumenda. Quisquam et nihil vel repellat dolorem voluptatem autem. Ipsa earum eum ex pariatur nam eaque sunt. Rerum est placeat quasi enim. Reiciendis aut nesciunt porro ducimus distinctio. Accusamus numquam minus vitae nemo doloribus minima. Eligendi iusto cupiditate eos aut. Doloribus cupiditate nulla non. Omnis aperiam in cumque et consectetur enim. Facere veritatis et recusandae atque. Est quae corporis excepturi eos laboriosam qui cupiditate et. Voluptas est et dolor et saepe. Et accusamus velit voluptas fugiat doloremque vero. Itaque qui doloremque sit quia. Aut fuga excepturi ducimus est magnam rem itaque. Dicta voluptatibus nobis omnis sit. Qui deleniti velit eum optio nulla doloremque suscipit. Quia occaecati ipsam nulla id."
+    }
+
+### Удаление задачи
+    DELETE /api/tasks/{id}
+
+    Ответ: Задача
+
+    Пример ответа:
+    {
+        "id": 1,
+        "status": "DONE",
+        "description": "Fugiat architecto numquam ab odio velit et. Repudiandae enim iusto quo eius perspiciatis assumenda. Quisquam et nihil vel repellat dolorem voluptatem autem. Ipsa earum eum ex pariatur nam eaque sunt. Rerum est placeat quasi enim. Reiciendis aut nesciunt porro ducimus distinctio. Accusamus numquam minus vitae nemo doloribus minima. Eligendi iusto cupiditate eos aut. Doloribus cupiditate nulla non. Omnis aperiam in cumque et consectetur enim. Facere veritatis et recusandae atque. Est quae corporis excepturi eos laboriosam qui cupiditate et. Voluptas est et dolor et saepe. Et accusamus velit voluptas fugiat doloremque vero. Itaque qui doloremque sit quia. Aut fuga excepturi ducimus est magnam rem itaque. Dicta voluptatibus nobis omnis sit. Qui deleniti velit eum optio nulla doloremque suscipit. Quia occaecati ipsam nulla id."
+    }
