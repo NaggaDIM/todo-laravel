@@ -2,7 +2,7 @@
 
 ## 1. Разворачивание проекта
 ### Клонирование проекта
-> git clone git@github.com:NaggaDIM/todo-laravel.git && cd todo-laravel
+    git clone git@github.com:NaggaDIM/todo-laravel.git && cd todo-laravel
 
 ### Установка зависимостей
     docker run --rm \
@@ -13,22 +13,22 @@
         composer install --ignore-platform-reqs
 
 ### Копирование конфигурационного файла
-> cp .env.example .env
+    cp .env.example .env
 
 ### Запуск сервиса
-> ./vendor/bin/sail up -d
+    ./vendor/bin/sail up -d
 
 ### Генерация ключа Laravel
-> ./vendor/bin/sail artisan key:generate
+    ./vendor/bin/sail artisan key:generate
 
 ### Применение миграций
-> ./vendor/bin/sail artisan migrate
+    ./vendor/bin/sail artisan migrate
 
 ### Кэширование конфигурации и списка маршрутов
-> ./vendor/bin/sail artisan optimize
+    ./vendor/bin/sail artisan optimize
 
 ### Добавление 20-ти тестовых задач (опционально)
-> ./vendor/bin/sail artisan db:seed --seeder=TaskSeeder
+    ./vendor/bin/sail artisan db:seed --seeder=TaskSeeder
 
 Сайт будет доступен по адресу [http://127.0.0.1:8090](http://127.0.0.1:8090)
 
@@ -38,7 +38,7 @@
     GET|HEAD /api/tasks
     
     Параметры:
-    * all - Логический (Необязательно) - При передачи истины отобразятся все задачи, иначе только невыполненые
+    * all - Логический (Необязательно) - При передаче истины отобразятся все задачи, иначе только невыполненые
 
     Ответ: Список задач
 
