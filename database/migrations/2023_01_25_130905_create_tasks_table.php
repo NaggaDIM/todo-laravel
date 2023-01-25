@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->id();
 
             $table->enum('status', array_column(Status::cases(), 'name'))->default(Status::NEW->name);
-            $table->longText('description');
+            $table->string('description', length: 1000);
 
             $table->timestamps();
         });
