@@ -1,4 +1,6 @@
-<?php namespace App\Enums\Tasks;
+<?php
+
+namespace App\Enums\Tasks;
 
 enum Status {
     case NEW;

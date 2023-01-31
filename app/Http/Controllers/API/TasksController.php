@@ -8,10 +8,15 @@ use App\Http\Requests\TaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 
 class TasksController extends Controller
 {
-    public function index()
+    /**
+     * Список задач
+     * @return JsonResponse
+     */
+    public function index(): JsonResponse
     {
         return response()->json(TaskResource::collection(
             Task::query()
@@ -22,37 +27,60 @@ class TasksController extends Controller
         ));
     }
 
-    public function store(TaskRequest $request)
+    /**
+     * Создание задачи
+     * @param TaskRequest $request
+     * @return JsonResponse
+     */
+    public function store(TaskRequest $request): JsonResponse
     {
         /** @var Task $task */
-        $task = Task::create([
-            'status' => Status::NEW,
-            ...$request->validated()
-        ]);
+        $task = Task::create(['status' => Status::NEW, ...$request->validated()]);
 
         return response()->json(TaskResource::make($task));
     }
 
-    public function show(Task $task)
+    /**
+     * Просмотр задачи
+     * @param Task $task
+     * @return JsonResponse
+     */
+    public function show(Task $task): JsonResponse
     {
         return response()->json(TaskResource::make($task));
     }
 
-    public function update(TaskRequest $request, Task $task)
+    /**
+     * Редактирование задачи
+     * @param TaskRequest $request
+     * @param Task $task
+     * @return JsonResponse
+     */
+    public function update(TaskRequest $request, Task $task): JsonResponse
     {
         $task->update($request->validated());
 
         return response()->json(TaskResource::make($task));
     }
 
-    public function done(Task $task)
+    /**
+     * Пометка задачи выполненной
+     * @param Task $task
+     * @return JsonResponse
+     */
+    public function done(Task $task): JsonResponse
     {
         $task->update(['status' => Status::DONE]);
 
         return response()->json(TaskResource::make($task));
     }
 
-    public function destroy(Task $task)
+    /**
+     * Удаление задачи
+     * @param Task $task
+     * @return JsonResponse
+     */
+    public function destroy(Task $task): JsonResponse
     {
         $task->delete();
 

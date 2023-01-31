@@ -21,6 +21,9 @@
 ### Генерация ключа Laravel
     ./vendor/bin/sail artisan key:generate
 
+### Очистка кэша
+    ./vendor/bin/sail artisan optimize:clear
+
 ### Применение миграций
     ./vendor/bin/sail artisan migrate
 
@@ -28,7 +31,7 @@
     ./vendor/bin/sail artisan optimize
 
 ### Добавление 20-ти тестовых задач (опционально)
-    ./vendor/bin/sail artisan db:seed --seeder=TaskSeeder
+    ./vendor/bin/sail artisan db:seed --class=TaskSeeder
 
 Сайт будет доступен по адресу [http://127.0.0.1:8090](http://127.0.0.1:8090)
 
