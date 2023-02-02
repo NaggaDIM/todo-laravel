@@ -2,7 +2,7 @@
 
 ## 1. Разворачивание проекта
 ### Клонирование проекта
-    git clone git@github.com:NaggaDIM/todo-laravel.git && cd todo-laravel
+    git clone https://github.com/NaggaDIM/todo-laravel.git && cd todo-laravel
 
 ### Установка зависимостей
     docker run --rm \
