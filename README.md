@@ -17,6 +17,11 @@
 
 ### Запуск сервиса
     ./vendor/bin/sail up -d
+    
+### Если действия выполняются от пользователя root
+    find ./storage -type d -exec chmod 777 {} \; \
+    && find ./storage -type f -exec chmod 666 {} \; \
+    && chmod 666 ./.env
 
 ### Генерация ключа Laravel
     ./vendor/bin/sail artisan key:generate
